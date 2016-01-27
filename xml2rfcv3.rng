@@ -1551,13 +1551,8 @@
       </choice>
     </element>
   </define>
-  <define name="svg">
-    <element name="svg" ns="http://www.w3.org/2000/svg">
-      <zeroOrMore>
-        <attribute name="TheRealDefinition" a:defaultValue="can be found in draft-brownlee-svg-rfc"/>
-      </zeroOrMore>
-    </element>
-  </define>
+  <!-- TODO: replace with link to RSE site, or provide an inline version -->
+  <include href="https://raw.githubusercontent.com/nevil-brownlee/draft-svg-rfc/master/svg.rng"/>  
   <define name="sourcecode">
     <element name="sourcecode">
       <optional>
@@ -2157,7 +2152,7 @@
       </zeroOrMore>
     </element>
   </define>
-  <start>
+  <start combine="choice">
     <choice>
       <ref name="rfc"/>
     </choice>
