@@ -289,7 +289,7 @@ because it makes no sense semantically.</t>
 <t><list style="symbols">
 
 <t>Allow non-ASCII characters in the format; the characters that are actually allowed will
-be determined by the RFC Editor.</t>
+be determined by the RFC Series Editor.</t>
 
 <t>Allow &lt;<x:ref>artwork</x:ref>&gt; and &lt;<x:ref>sourcecode</x:ref>&gt; to be used on
 their own in &lt;<x:ref>section</x:ref>&gt;
@@ -552,7 +552,7 @@ the appendices for a complete description of these attributes.
    <t>
       The value ought to be either the full name or the abbreviation of one of
       the IETF areas as listed on <eref target="http://www.ietf.org/iesg/area.html"/>.
-      The list will be kept by the RFC Editor.
+      The list will be kept by the RFC Series Editor.
    </t>
    <t><!--AG-->This element appears as a child element of &lt;<x:ref>front</x:ref>&gt; (<xref target="element.front"/>).</t>
    <t anchor="element.area.contents"><!--AG-->
@@ -753,7 +753,7 @@ the appendices for a complete description of these attributes.
             <t>hex-dump</t>
             <t>svg</t>
          </list>
-            The RFC Editor will maintain a complete list of the preferred values on its
+            The RFC Series Editor will maintain a complete list of the preferred values on its
             web site, and that list is expected to be updated over time. Thus, a consumer
             of v3 XML should not cause a failure when it encounters an unexpected type or no type is specified. 
          </t>
@@ -2361,7 +2361,7 @@ the appendices for a complete description of these attributes.
       a &lt;link&gt; element:
          <list style="symbols">
          <t>
-               The current ISSN for the RFC Series.
+               The current ISSN for the RFC series.
                The value for the "rel" attribute is "item".
                The link should use the form "urn:issn:".
             </t>
@@ -4058,7 +4058,7 @@ Using CDATA:
             <t>xml</t>
             <t>yang</t>
          </list>
-            The RFC Editor will maintain a complete list of the preferred values on its
+            The RFC Series Editor will maintain a complete list of the preferred values on its
             web site, and that list is expected to be updated over time. Thus, a consumer
             of v3 XML should not cause a failure when it encounters an unexpected type or no type is specified. 
          </t>
@@ -5766,7 +5766,7 @@ v3 have attributes from v2 that are deprecated; those are not listed here.</t>
 <t>
   This format is based on <xref target="XML"/> and thus does not have any
   issues representing arbitrary Unicode <xref target="UNICODE"/> characters in text content.
-  The RFC Editor may restrict some of the characters that can be used in a particular RFC;
+  The RFC Series Editor may restrict some of the characters that can be used in a particular RFC;
   the rules for such restrictions are covered in <xref target="NONASCII"/>.
 </t>
 </section>
@@ -5876,7 +5876,7 @@ and should have only a localized impact on the document processing and rendering
       None
     </t>
     <t hangText="Author:">
-      ee the Author's Address section of RFC 7749.
+      See the Author's Address section of RFC 7749.
     </t>
     <t hangText="Change controller:">
       RFC Series Editor (rse@rfc-editor.org)
@@ -6366,7 +6366,7 @@ Suzanne Woolf
 
 <section title="Front-Page (&quot;Boilerplate&quot;) Generation" anchor="front.page">
 
-<t>The values listed here will be defined by the RFC Editor. Those listed here
+<t>The values listed here will be defined by the RFC Series Editor. Those listed here
 are believed to be the current values in use.</t>
 
 <section title="The &quot;ipr&quot; Attribute" anchor="attribute-ipr">
