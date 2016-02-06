@@ -15,6 +15,11 @@
 
 rfc/@submissionType is now duplicated in seriesInfo/status. This needs to be rectified.
 
+sourcecode / number - wait
+sourcecode / indent - wait for Tony, probably not
+
+Get rid of figure/@align - separate thread
+
 -->
 
 <!DOCTYPE rfc [
@@ -659,6 +664,7 @@ the appendices for a complete description of these attributes.
       <t>
             Controls whether the artwork appears left justified (default), centered,
             or right justified.
+            Artwork is aligned relative to left margin of document.
          </t>
       <t><!--AG-->Allowed values:</t>
       <ul><!--AG-->
@@ -3964,10 +3970,12 @@ in the same &lt;front&gt; element.
       This element allows the inclusion of sourcecode into the document.
    </t>
    <t>
-      &lt;sourcecode&gt; provides
-      full control of horizontal whitespace and line breaks.
-      It is thus useful for source code and formal languages (such as ABNF <xref target="RFC5234"/> or the RNC notation used in this document).
       When rendered, sourcecode is always shown in a monospace font.
+      When &lt;sourcecode&gt; is a child of &lt;<x:ref>figure</x:ref>&gt; or &lt;<x:ref>section</x:ref>&gt;, it provides
+      full control of horizontal whitespace and line breaks.
+      When formatted, it is indented indented relative to the left margin of the enclosing element.
+      It is thus useful for source code and formal languages (such as ABNF <xref target="RFC5234"/> or the RNC notation used in this document).
+      (When &lt;sourcecode&gt; is a child of other elements, if flows with the text that surrounds it.)
    </t>
    <t>
       For artwork such as character-based art, diagrams of message layouts, and so on,

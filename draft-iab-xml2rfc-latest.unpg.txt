@@ -627,7 +627,8 @@ Table of Contents
 2.5.1.  "align" Attribute
 
    Controls whether the artwork appears left justified (default),
-   centered, or right justified.
+   centered, or right justified.  Artwork is aligned relative to left
+   margin of document.
 
    Allowed values:
 
@@ -2636,10 +2637,14 @@ Table of Contents
 
    This element allows the inclusion of sourcecode into the document.
 
-   <sourcecode> provides full control of horizontal whitespace and line
-   breaks.  It is thus useful for source code and formal languages (such
-   as ABNF [RFC5234] or the RNC notation used in this document).  When
-   rendered, sourcecode is always shown in a monospace font.
+   When rendered, sourcecode is always shown in a monospace font.  When
+   <sourcecode> is a child of <figure> or <section>, it provides full
+   control of horizontal whitespace and line breaks.  When formatted, it
+   is indented indented relative to the left margin of the enclosing
+   element.  It is thus useful for source code and formal languages
+   (such as ABNF [RFC5234] or the RNC notation used in this document).
+   (When <sourcecode> is a child of other elements, if flows with the
+   text that surrounds it.)
 
    For artwork such as character-based art, diagrams of message layouts,
    and so on, use the <artwork> element instead.
