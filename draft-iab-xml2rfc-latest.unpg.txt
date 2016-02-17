@@ -3,9 +3,9 @@
 
 Network Working Group                                         P. Hoffman
 Internet-Draft                                                     ICANN
-Obsoletes: 7749 (if approved)                          February 10, 2016
+Obsoletes: 7749 (if approved)                          February 16, 2016
 Intended status: Informational
-Expires: August 13, 2016
+Expires: August 19, 2016
 
 
                    The "xml2rfc" version 3 Vocabulary
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 13, 2016.
+   This Internet-Draft will expire on August 19, 2016.
 
 Copyright Notice
 
@@ -591,7 +591,8 @@ Table of Contents
    Drafts:
 
    o  Inline, by including all of the SVG in the content of the element,
-      such as: <artwork type="svg"><svg xmlns...">
+      such as: <artwork type="svg"><svg xmlns http://www.w3.org/2000/svg
+      ...">
 
    o  Inline, but using XInclude (see Appendix B.1), such as: <artwork
       type="svg"><xi:include href=...>
@@ -3795,7 +3796,8 @@ Table of Contents
 
 4.  SVG
 
-   The discussion of the use of SVG can be found in [SVGforRFCs].
+   The discussion of the use of SVG can be found in [SVGforRFCs].  This
+   element is part of the namespace "http://www.w3.org/2000/svg".
 
 5.  Internationalization Considerations
 
