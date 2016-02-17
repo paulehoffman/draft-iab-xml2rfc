@@ -405,6 +405,8 @@ them into &lt;<x:ref>seriesInfo</x:ref>&gt;.</t>
 Tools interpreting the XML described here will collapse horizontal whitespace and line breaks to a
 single whitespace (except inside &lt;<x:ref>artwork</x:ref>&gt; and
 &lt;<x:ref>sourcecode</x:ref>&gt;), and will trim leading and trailing whitespace.
+Tab characters (U+0009) inside &lt;<x:ref>artwork</x:ref>&gt; and &lt;<x:ref>sourcecode</x:ref>&gt; are
+prohibited.
 </t>
 
 <t>
@@ -605,6 +607,7 @@ the appendices for a complete description of these attributes.
       &lt;artwork&gt; provides
       full control of horizontal whitespace and line breaks; thus is
       used for a variety of things, such as diagrams ("line art") and protocol unit diagrams.
+      Tab characters (U+0009) inside of this element are prohibited.
    </t>
    <t>
       Alternatively, the "src" attribute allows referencing an external graphics
@@ -3983,6 +3986,8 @@ in the same &lt;front&gt; element.
       When formatted, it is indented indented relative to the left margin of the enclosing element.
       It is thus useful for source code and formal languages (such as ABNF <xref target="RFC5234"/> or the RNC notation used in this document).
       (When &lt;sourcecode&gt; is a child of other elements, if flows with the text that surrounds it.)
+      Tab characters (U+0009) inside of this element are prohibited.
+
    </t>
    <t>
       For artwork such as character-based art, diagrams of message layouts, and so on,

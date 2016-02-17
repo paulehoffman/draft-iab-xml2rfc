@@ -454,7 +454,8 @@ Table of Contents
    Tools interpreting the XML described here will collapse horizontal
    whitespace and line breaks to a single whitespace (except inside
    <artwork> and <sourcecode>), and will trim leading and trailing
-   whitespace.
+   whitespace.  Tab characters (U+0009) inside <artwork> and
+   <sourcecode> are prohibited.
 
    Some of the elements have attributes that are not described in this
    section because those attributes are specific to the prep tool.
@@ -569,7 +570,8 @@ Table of Contents
    This element allows the inclusion of "artwork" in the document.
    <artwork> provides full control of horizontal whitespace and line
    breaks; thus is used for a variety of things, such as diagrams ("line
-   art") and protocol unit diagrams.
+   art") and protocol unit diagrams.  Tab characters (U+0009) inside of
+   this element are prohibited.
 
    Alternatively, the "src" attribute allows referencing an external
    graphics file, such as a vector drawing in SVG or a bitmap graphic
@@ -2650,7 +2652,8 @@ Table of Contents
    element.  It is thus useful for source code and formal languages
    (such as ABNF [RFC5234] or the RNC notation used in this document).
    (When <sourcecode> is a child of other elements, if flows with the
-   text that surrounds it.)
+   text that surrounds it.)  Tab characters (U+0009) inside of this
+   element are prohibited.
 
    For artwork such as character-based art, diagrams of message layouts,
    and so on, use the <artwork> element instead.
