@@ -13,12 +13,20 @@
 
 <!--
 
+Change <tt> to <kbd>?
+
+Maybe add <referencesection>
+
 rfc/@submissionType is now duplicated in seriesInfo/stream. This needs to be rectified.
 
 sourcecode / number - wait
 sourcecode / indent - wait for Tony, probably not
 
-Adding <example>?
+Does the types table in <artwork> need a second column for what can appear in plaintext?
+
+Maybe have to add prose about fullname being required if there is ascii* in <author>
+
+Adding <example>? Hopefully not.
 
 -->
 
@@ -46,7 +54,7 @@ Adding <example>?
 ]>
 
 <rfc xmlns:x="http://purl.org/net/xml2rfc/ext" obsoletes="7749" xmlns:ed="http://greenbytes.de/2002/rfcedit" ipr="trust200902" docName="draft-iab-xml2rfc-latest" category="info" xml:lang="en">
-  <x:feedback template="mailto:xml2rfc@ietf.org?subject={docname},%20%22{section}%22&amp;body=&lt;{ref}&gt;:"/>
+  <x:feedback template="mailto:rfc-interest@rfc-editor.org,iab@iab.org?subject={docname},%20%22{section}%22&amp;body=&lt;{ref}&gt;:"/>
 	<front>
   <title>The "xml2rfc" version 3 Vocabulary</title>
   <author initials="P." surname="Hoffman" fullname="Paul Hoffman">
@@ -622,7 +630,7 @@ the appendices for a complete description of these attributes.
       There are at least five ways to include SVG in artwork in Internet-Drafts:
       <list style="symbols">
          <t>Inline, by including all of the SVG in the content of the element, 
-            such as: &lt;artwork type="svg"&gt;&lt;svg xmlns http://www.w3.org/2000/svg ..."&gt;</t>
+            such as: &lt;artwork type="svg"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" ..."&gt;</t>
          <t>Inline, but using XInclude (see <xref target="includingexternal"/>),
             such as: &lt;artwork type="svg"&gt;&lt;xi:include href=...&gt;</t>
          <t>As a data: URI, such as: &lt;artwork type="svg"
@@ -2122,7 +2130,7 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       A &lt;<x:ref>seriesInfo</x:ref>&gt; element determines the document number (for RFCs)
       or name (for Internet-Drafts).
       Another &lt;<x:ref>seriesInfo</x:ref>&gt; element determines the "maturity level"
-      (see <xref target="RFC2026" sectionFormat="of" section="4"/>), using values of "std" for
+      (defined in <xref target="RFC2026"/>), using values of "std" for
       "Standards Track", "bcp" for "BCP", "info" for "Informational", "exp" for "Experimental", and
       "historic" for "Historic".
       The "name" attributes of those
@@ -2564,6 +2572,7 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       <t>
          If set to "true", this note is marked in the prep tool with text indicating that it should be
          removed before the document is published as an RFC.
+         That text will be “This note is to be removed before publishing as an RFC.”.
       </t>
       <t><!--AG-->Allowed values:</t>
       <ul><!--AG-->
@@ -3056,10 +3065,6 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       as described in <xref target="RFC7322"/>).
       This vocabulary supports the split with the &lt;<x:ref>name</x:ref>&gt; child element.
       In general, the title should be either "Normative References" or "Informative References".
-   </t>
-   <t>
-      By default, the order of references is significant. Some formatters, however,
-      might be able to be requested to sort them based on their anchor names.
    </t>
    <t><!--AG-->This element appears as a child element of &lt;<x:ref>back</x:ref>&gt; (<xref target="element.back"/>).</t>
    <t anchor="element.references.contents"><!--AG-->
@@ -3829,7 +3834,7 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       A processing tool determines if it is working on an RFC or an Internet-Draft by inspecting the
       "name" attribute of a &lt;<x:ref>seriesInfo</x:ref>&gt; element inside the
       &lt;<x:ref>front</x:ref>&gt; element inside the &lt;<x:ref>rfc</x:ref>&gt; element, looking
-      for "rfc" or "Internet-Draft". (Specifying neither value in any of the
+      for "RFC" or "Internet-Draft". (Specifying neither value in any of the
       &lt;<x:ref>seriesInfo</x:ref>&gt; elements can be useful for producing other types of
       documents, but is out of scope for this specification.)
    </t>
@@ -5940,6 +5945,8 @@ not those that are part of a sequence of resources.</t>
 
 </section>
 
+<!--
+
 <section title="IAB Members at the Time of Publication" numbered="false">
 <t>
 Jari Arkko (IETF Chair) <vspace blankLines="0"/>
@@ -5958,17 +5965,7 @@ Suzanne Woolf
 </t>
 </section>
 
-<section title="Acknowledgments" anchor="acknowledgements">
-<t>
-  Thanks to everybody who reviewed this document and provided feedback and/or
-  specification text. Thanks especially go to Julian Reschke for editing <xref target="RFC7749"/>
-  and those who provided feedback on that document. 
-</t>
-<t>
-  We also thank Marshall T. Rose for both the original design and the reference
-  implementation of the "xml2rfc" processor.
-</t>
-</section>
+-->
 
   </middle>
   <back>
@@ -6387,7 +6384,7 @@ are believed to be the current values in use.</t>
   "<x:span anchor="attribute-ipr-noModification3978">noModification3978</x:span>", and
   "<x:span anchor="attribute-ipr-noDerivatives3978">noDerivatives3978</x:span>"
   are similar to their counterparts above, except that they use text
-  specified in <xref target="RFC3978" section="5" sectionFormat="of"/>.
+  specified in <xref target="RFC3978"/>.
 </t>
 </section>
 
@@ -6398,7 +6395,7 @@ are believed to be the current values in use.</t>
   "<x:span anchor="attribute-ipr-noModification3667">noModification3667</x:span>", and
   "<x:span anchor="attribute-ipr-noDerivatives3667">noDerivatives3667</x:span>"
   are similar to their counterparts above, except that they use text
-  specified in <xref target="RFC3667" section="5" sectionFormat="of"/>.
+  specified in <xref target="RFC3667"/>.
 </t>
 </section>
 
@@ -6408,7 +6405,7 @@ are believed to be the current values in use.</t>
   The attribute values "<x:span anchor="attribute-ipr-full2026">full2026</x:span>" and
   "<x:span anchor="attribute-ipr-noDerivativeWorks2026">noDerivativeWorks2026</x:span>"
   are similar to their counterparts above, except that they use text
-  specified in <xref target="RFC2026" section="10" sectionFormat="of"/>.
+  specified in Section 10 of <xref target="RFC2026"/>.
 </t>
 <t>
   The special value "<x:span anchor="attribute-ipr-none">none</x:span>"
@@ -8701,6 +8698,18 @@ to the v3 schema.</t>
 + start |= rfc
 <?ENDINC differences-from-v2.txt ?>
 </artwork></figure>
+</section>
+
+<section title="Acknowledgments" anchor="acknowledgements">
+<t>
+  Thanks to everybody who reviewed this document and provided feedback and/or
+  specification text. Thanks especially go to Julian Reschke for editing <xref target="RFC7749"/>
+  and those who provided feedback on that document. 
+</t>
+<t>
+  We also thank Marshall T. Rose for both the original design and the reference
+  implementation of the "xml2rfc" processor.
+</t>
 </section>
 
 </back>
