@@ -31,7 +31,6 @@ Julian, 2016-01-06:
 Joe responded
 	If we were to un-deprecate rfc/@category, we would not have to move seriesInfo back to just being in reference. However, I do think it would be nice to have access to the status and stream bits in references as well.  For some of the external streams, they may have similar semantics that can map into those attributes.
 
-
 -->
 
 <!DOCTYPE rfc [
@@ -254,7 +253,7 @@ entry and still allow the ASCII-equivalent values to appear in the processed doc
 
 <t>Add "pn" to &lt;<x:ref>artwork</x:ref>&gt;,
 &lt;<x:ref>aside</x:ref>&gt;, &lt;<x:ref>blockquote</x:ref>&gt;, &lt;<x:ref>boilerplate</x:ref>&gt;,&lt;<x:ref>dt</x:ref>&gt;,
-&lt;<x:ref>figure</x:ref>&gt;, &lt;<x:ref>li</x:ref>&gt;, &lt;<x:ref>references</x:ref>&gt;, &lt;<x:ref>section</x:ref>&gt;,
+&lt;<x:ref>figure</x:ref>&gt;, &lt;<x:ref>iref</x:ref>&gt;, &lt;<x:ref>li</x:ref>&gt;, &lt;<x:ref>references</x:ref>&gt;, &lt;<x:ref>section</x:ref>&gt;,
 &lt;<x:ref>sourcecode</x:ref>&gt;, &lt;<x:ref>t</x:ref>&gt;,
 and &lt;<x:ref>table</x:ref>&gt; to hold automatically generated
 numbers for items in a section that don't have their own numbering (namely figures and tables).</t>
@@ -975,8 +974,7 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       <t>
             The full name (used in the automatically generated "Author's Address" section).
             Although this attribute is optional, if one or more of the "asciiFullname", "asciiInitials",
-            or "asciiSurname" attributes have values, the "fullname" attribute will be required by
-            tools preparing Internet-Drafts or RFCs.
+            or "asciiSurname" attributes have values, the "fullname" attribute is required.
       </t>
    </section>
 
@@ -1449,9 +1447,9 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       date.
    </t>
          <t>
-      If given, the month must be a number or a month in English. 
+      In dates in &lt;<x:ref>rfc</x:ref>&gt; elements, the month must be a number or a month in English. 
       The prep tool will silently change text month names to numbers.
-      The year must be a four-digit number.
+      Similarly, the year must be a four-digit number.
    </t>
          <t>
       When the prep tool is used to create Internet-Drafts, it will reject a submitted Internet-Draft that has a &lt;<x:ref>date</x:ref>&gt;
@@ -1460,7 +1458,7 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       authors might simply not include a &lt;<x:ref>date</x:ref>&gt; element in the boilerplate.
    </t>
          <t hangText="Bibliographic references:">
-      The date information can have prose text for the month or year.
+      In dates in &lt;<x:ref>reference</x:ref>&gt; elements, the date information can have prose text for the month or year.
       For example, vague dates (year="ca. 2000"), date ranges (year="2012-2013"),
       non-specific months (month="Second quarter") and so on are allowed.
    </t>
@@ -3154,23 +3152,23 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
    <iref item="Elements" subitem="relref" primary="true"/>
    <iref item="relref element" primary="true"/>
    <t>
-      A relative link to a reference from the "References" section.
-      Formatters that have links (such as HTML and PDF) are likely to render &lt;relref&gt; elements as external hyperlinks
+      Represents a link to a specific part of a document that appears in a &lt;<x:ref>reference</x:ref>&gt; element.
+      Formatters that have links (such as HTML and PDF) render &lt;relref&gt; elements as external hyperlinks
       to the specified part of the reference, creating the link target by combining the base URI from the
       &lt;<x:ref>reference</x:ref>&gt; element with the "relative" attribute from this element.
       The "target" attribute is required, and it must be the anchor of a &lt;<x:ref>reference</x:ref>&gt; element.
    </t>
    <t>   
-      Either the "relative" or the "section" attribute must be present, but both cannot be given for a &lt;relref&gt; element.
-      If a reference is an RFC or Internet-Draft that is in the v3 format and the desired relative reference is to
-      a section of that reference, the "section" attribute is easier to use than the "relative" attribute because
-      the value of "section" is just a section string such as "2.3".
+      The "section" attribute is required, and the "relative" attribute is option.
+      If reference is not an RFC or Internet-Draft that is in the v3 format, the element MUST have a "relative" attribute;
+      in this case, the value of the "section" attribute is ignored.
    </t>
    <t>
       An example of the &lt;relref&gt; element with text content might be:
 <figure>
          <artwork>
-      See &lt;relref section="2.3" target="RFC7878"&gt;
+      See
+      &lt;relref section="2.3" target="RFC7878" displayFormat="bare"&gt;
       the protocol overview&lt;/relref&gt;
       for more information.
 </artwork>
@@ -3181,11 +3179,12 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
 <figure>
          <artwork>
       See 
-      &lt;a href="http://www.rfc-editor.org/info/rfc7878#s-2.3"&gt;
+      &lt;a href="http://www.rfc-editor.org/rfc/rfc7878.html#s-2.3"&gt;
       the protocol overview&lt;/a&gt;
       for more information.
 </artwork>
       </figure>
+   Note that the URL in the above example might be different when the RFC Editor deploys the v3 format.
    </t>
    <t/>
    <t><!--AG-->This element appears as a child element of &lt;<x:ref>annotation</x:ref>&gt; (<xref target="element.annotation"/>), &lt;<x:ref>blockquote</x:ref>&gt; (<xref target="element.blockquote"/>), &lt;<x:ref>cref</x:ref>&gt; (<xref target="element.cref"/>), &lt;<x:ref>dd</x:ref>&gt; (<xref target="element.dd"/>), &lt;<x:ref>dt</x:ref>&gt; (<xref target="element.dt"/>), &lt;<x:ref>em</x:ref>&gt; (<xref target="element.em"/>), &lt;<x:ref>li</x:ref>&gt; (<xref target="element.li"/>), &lt;<x:ref>name</x:ref>&gt; (<xref target="element.name"/>), &lt;<x:ref>preamble</x:ref>&gt; (<xref target="element.preamble"/>), &lt;<x:ref>strong</x:ref>&gt; (<xref target="element.strong"/>), &lt;<x:ref>sub</x:ref>&gt; (<xref target="element.sub"/>), &lt;<x:ref>sup</x:ref>&gt; (<xref target="element.sup"/>), &lt;<x:ref>t</x:ref>&gt; (<xref target="element.t"/>), &lt;<x:ref>td</x:ref>&gt; (<xref target="element.td"/>), &lt;<x:ref>th</x:ref>&gt; (<xref target="element.th"/>), and &lt;<x:ref>tt</x:ref>&gt; (<xref target="element.tt"/>).</t>
@@ -3207,11 +3206,11 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
         "of"
         <list style="empty">
             <t>
-            A formatter should display the relative reference as the contents of the "derivedRemoteContent" attribute
+            A formatter should display the relative reference as the word "Section" followed by a space, the contents of the "section" attribute
             followed by a space, the word "of", another space, and the value from the "target" attribute enclosed in square brackets.
             </t>
             <t>
-            For example, if Section 2.3 of RFC 7878 has the title "Protocol Overview", with an input of:
+            For example, with an input of:
 <figure>
                   <artwork>
       See
@@ -3243,10 +3242,10 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
         <list style="empty">
             <t>
             A formatter should display the relative reference as the value from the "target" attribute enclosed in square brackets,
-            a comma, a space, and the "derivedRemoteContent" attribute.
+            a comma, a space, the word "Section" followed by a space, and the "section" attribute.
             </t>
             <t>
-            For example, if Section 2.3 of RFC 7878 has the title "Protocol Overview", with an input of:
+            For example, with an input of:
 <figure>
                   <artwork>
       See
@@ -3273,10 +3272,10 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
         <list style="empty">
             <t>
             A formatter should display the relative reference as the value from the "target" attribute enclosed in square brackets,
-            a space, a left parenthesis, the "derivedRemoteContent" attribute, and a right parenthesis.
+            a space, a left parenthesis, the word "Section" followed by a space, the "section" attribute, and a right parenthesis.
             </t>
             <t>
-            For example, if Section 2.3 of RFC 7878 has the title "Protocol Overview", with an input of:
+            For example, with an input of:
 <figure>
                   <artwork>
       See
@@ -3303,14 +3302,14 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
         "bare"
         <list style="empty">
             <t>
-            A formatter should display the relative reference as the contents of the "derivedRemoteContent" attribute
+            A formatter should display the relative reference as the contents of the "section" attribute
             and nothing else. This is useful when there are multiple relative references to a single base reference.
             </t>
             <t>
             For example:
 <figure>
                   <artwork>
-      See
+      See Section
       &lt;relref section="2.3" target="RFC7878" displayFormat="bare"/&gt;
       and
       &lt;relref section="2.4" target="RFC7878" displayFormat="of"/&gt;
@@ -3322,9 +3321,9 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
                An HTML formatter might generate:
 <figure>
                   <artwork>
-      See
+      See Section
       &lt;a href="http://www.rfc-editor.org/info/rfc7878#s-2.3"&gt;
-      Section 2.3&lt;/a&gt;
+      2.3&lt;/a&gt;
       and
       &lt;a href="http://www.rfc-editor.org/info/rfc7878#s-2.4"&gt;
       Section 2.4&lt;/a&gt; of
@@ -3359,13 +3358,14 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
 
    <!--relref/@section-->
    <section anchor="element.relref.attribute.section" toc="exclude">
-      <name>"section" Attribute</name>
+      <name>"section" Attribute <em> (Mandatory)</em>
+      </name>
       <iref item="Attributes" subitem="section"/>
       <iref item="relref element" subitem="section attribute"/>
       <iref item="section attribute" subitem="in relref element"/>
       <t>
          Specifies a section of the target reference.
-         If the reference is not an RFC or Internet-Draft, it is an error.
+         If the reference is not an RFC or Internet-Draft in the v3 format, it is an error.
       </t>
    </section>
 
@@ -3542,7 +3542,8 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       <t>
          The date that the XML was processed by a prep tool.
          This is included in the XML file just before it is saved to disk.
-         The value is formatted using the format from <xref target="RFC3339"/>.
+         The value is formatted using the 'date-time' format defined in Section 5.6 of <xref target="RFC3339"/>.
+         The "time-offset" should be "Z".
       </t>
    </section>
 
@@ -4612,17 +4613,6 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       </t>
    </section>
 
-   <!--td/@border-->
-   <section anchor="element.td.attribute.border" toc="exclude">
-      <name>"border" Attribute</name>
-      <iref item="Attributes" subitem="border"/>
-      <iref item="td element" subitem="border attribute"/>
-      <iref item="border attribute" subitem="in td element"/>
-      <t>
-         The width of the border for this cell. The default is 0, meaning no border.
-      </t>
-   </section>
-
    <!--td/@colspan-->
    <section anchor="element.td.attribute.colspan" toc="exclude">
       <name>"colspan" Attribute</name>
@@ -4800,17 +4790,6 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       </t>
    </section>
 
-   <!--th/@border-->
-   <section anchor="element.th.attribute.border" toc="exclude">
-      <name>"border" Attribute</name>
-      <iref item="Attributes" subitem="border"/>
-      <iref item="th element" subitem="border attribute"/>
-      <iref item="border attribute" subitem="in th element"/>
-      <t>
-         The width of the border for this cell. The default is 0, meaning no border.
-      </t>
-   </section>
-
    <!--th/@colspan-->
    <section anchor="element.th.attribute.colspan" toc="exclude">
       <name>"colspan" Attribute</name>
@@ -4947,19 +4926,6 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       <iref item="anchor attribute" subitem="in tr element"/>
       <t>
         Document-wide unique identifier for the row.
-      </t>
-   </section>
-
-   <!--tr/@border-->
-   <section anchor="element.tr.attribute.border" toc="exclude">
-      <name>"border" Attribute</name>
-      <iref item="Attributes" subitem="border"/>
-      <iref item="tr element" subitem="border attribute"/>
-      <iref item="border attribute" subitem="in tr element"/>
-      <t>
-         The width of the border for this row. The default is 0, meaning no border. If the
-         cells in this row also have "border" attributes, those values override this value
-         for those cells.
       </t>
    </section>
 </section>
@@ -6654,6 +6620,14 @@ numbered one higher than the highest top-level section number in &lt;<x:ref>midd
 always has the format "f-nnn", where "nnn" is the figure number.
 For example, this would be "f-5" for Figure 5.</t>
 
+<t>"pn" for &lt;<x:ref>iref</x:ref>&gt; elements
+always has the format "i-ttt-nnn", where "ttt" is the 
+slugified item (plus a hyphen and the slugified subitem if there is a subitem),
+and "nnn" is the instance of that item/subitem pair.
+For example, this would be
+"i-foo-1" for "&lt;iref item='foo'&gt;" and 
+"i-foo-bar-1" for "&lt;iref item='foo' subitem='bar'&gt;".</t>
+
 <t>"pn" for &lt;<x:ref>table</x:ref>&gt; elements
 always has the format "t-nnn", where "nnn" is the table number.
 For example, this would be "t-5" for Table 5.</t>
@@ -6700,9 +6674,6 @@ attribute if that attribute is removed by the prep tool.</t>
 <t>&lt;figure&gt; originalSrc -- This attribute is filled with the original value of the "src"
 attribute if that attribute is removed by the prep tool.</t>
 
-<t>&lt;iref&gt; "irefid" attribute -- This attribute is filled with an identifier used when creating
-indexes.</t>
-
 <t>&lt;name&gt; "slugifiedName" attribute -- This attribute is filled with a "slugified" version of
 the text in the element.  This attribute can be used in the output formats for elements that have
 both names and numbers.</t>
@@ -6710,17 +6681,6 @@ both names and numbers.</t>
 <t>&lt;relref&gt; "derivedLink" attribute -- This attribute is filled with the link that is derived
 from combining the URI from the reference and the relative part that is either a copy of the
 "relative" attribute or a section number derived from the "section" attribute.</t>
-
-<t>&lt;relref&gt; "derivedRemoteContent" attribute -- If the &lt;relref&gt; element has text
-content, this attribute is filled with that content; the "displayFormat" attribute is set to "bare"
-if that attribute is not already set. If the &lt;relref&gt; element has no text content, this
-attribute is filled with the text for the remote link, such as "Section 2.3" or "Table 5".  The prep
-tool might determine this text by reading the target reference and, if it is an RFC or Internet-Draft
-in the v3 format, finding the anchor given in the "relative" attribute or derived from the "section"
-attribute, and using the title of that element. If the reference is not an RFC or Internet-Draft in
-the v3 format, the text fragment is simply the value of the "relative" or "section" attribute.  This
-will rarely produce a good result in formatted output so, for these documents, the &lt;relref&gt;
-element should contain text content.</t>
 
 <t>&lt;rfc&gt; "expiresDate" attribute -- This attribute is filled with the date that an Internet
 Draft expires. The date is in the format yyyy-mm-dd.</t>
@@ -7122,6 +7082,7 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
     [ a:defaultValue = "empty" ] attribute style { text }?,
     attribute hangIndent { text }?,
     attribute counter { text }?,
+    attribute pn { text }?,
     t+
   }
 
@@ -7135,6 +7096,7 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
     attribute group { text }?,
     [ a:defaultValue = "normal" ]
     attribute spacing { "normal" | "compact" }?,
+    attribute pn { text }?,
     li+
   }
 
@@ -7145,8 +7107,9 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
     attribute anchor { xsd:ID }?,
     [ a:defaultValue = "normal" ]
     attribute spacing { "normal" | "compact" }?,
-    [ a:defaultValue = "false" ]
-    attribute empty { "false" | "true" }?,
+    ([ a:defaultValue = "false" ]
+     attribute empty { "false" | "true" },
+     attribute pn { text }?)?,
     li+
   }
 
@@ -7180,6 +7143,7 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
     attribute spacing { "normal" | "compact" }?,
     [ a:defaultValue = "true" ]
     attribute hanging { "false" | "true" }?,
+    attribute pn { text }?,
     (dt, dd)+
   }
 
@@ -7208,6 +7172,7 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
     attribute xml:base { text }?,
     attribute xml:lang { text }?,
     attribute anchor { xsd:ID }?,
+    attribute pn { text }?,
     ((artwork | dl | figure | ol | sourcecode | t | ul)+
      | (text
         | bcp14
@@ -7243,9 +7208,8 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
     attribute target { xsd:IDREF },
     [ a:defaultValue = "of" ]
     attribute displayFormat { "of" | "comma" | "parens" | "bare" }?,
-    (attribute section { text },
-     attribute relative { text }?)?,
-    attribute derivedRemoteContent { text }?,
+    attribute section { text },
+    attribute relative { text }?,
     attribute derivedLink { text }?,
     text
   }
@@ -7266,7 +7230,7 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
     [ a:defaultValue = "" ] attribute subitem { text }?,
     [ a:defaultValue = "false" ]
     attribute primary { "true" | "false" }?,
-    [ a:defaultValue = "" ] attribute irefid { text }?,
+    attribute pn { text }?,
     empty
   }
 
@@ -7500,7 +7464,6 @@ include "svg.rnc"
     attribute xml:base { text }?,
     attribute xml:lang { text }?,
     attribute anchor { xsd:ID }?,
-    [ a:defaultValue = "0" ] attribute border { text }?,
     (td | th)+
   }
 
@@ -7509,7 +7472,6 @@ include "svg.rnc"
     attribute xml:base { text }?,
     attribute xml:lang { text }?,
     attribute anchor { xsd:ID }?,
-    [ a:defaultValue = "0" ] attribute border { text }?,
     [ a:defaultValue = "0" ] attribute colspan { text }?,
     [ a:defaultValue = "0" ] attribute rowspan { text }?,
     [ a:defaultValue = "left" ]
@@ -7541,7 +7503,6 @@ include "svg.rnc"
     attribute xml:base { text }?,
     attribute xml:lang { text }?,
     attribute anchor { xsd:ID }?,
-    [ a:defaultValue = "0" ] attribute border { text }?,
     [ a:defaultValue = "0" ] attribute colspan { text }?,
     [ a:defaultValue = "0" ] attribute rowspan { text }?,
     [ a:defaultValue = "left" ]
@@ -8120,6 +8081,7 @@ to the v3 schema.</t>
 +     [ a:defaultValue = "empty" ] attribute style { text }?,
       attribute hangIndent { text }?,
       attribute counter { text }?,
++     attribute pn { text }?,
       t+
     }
 + ol =
@@ -8132,6 +8094,7 @@ to the v3 schema.</t>
 +     attribute group { text }?,
 +     [ a:defaultValue = "normal" ]
 +     attribute spacing { "normal" | "compact" }?,
++     attribute pn { text }?,
 +     li+
 +   }
 + ul =
@@ -8141,8 +8104,9 @@ to the v3 schema.</t>
 +     attribute anchor { xsd:ID }?,
 +     [ a:defaultValue = "normal" ]
 +     attribute spacing { "normal" | "compact" }?,
-+     [ a:defaultValue = "false" ]
-+     attribute empty { "false" | "true" }?,
++     ([ a:defaultValue = "false" ]
++      attribute empty { "false" | "true" },
++      attribute pn { text }?)?,
 +     li+
 +   }
 + li =
@@ -8174,6 +8138,7 @@ to the v3 schema.</t>
 +     attribute spacing { "normal" | "compact" }?,
 +     [ a:defaultValue = "true" ]
 +     attribute hanging { "false" | "true" }?,
++     attribute pn { text }?,
 +     (dt, dd)+
 +   }
 + dt =
@@ -8200,6 +8165,7 @@ to the v3 schema.</t>
 +     attribute xml:base { text }?,
 +     attribute xml:lang { text }?,
 +     attribute anchor { xsd:ID }?,
++     attribute pn { text }?,
 +     ((artwork | dl | figure | ol | sourcecode | t | ul)+
 +      | (text
 +         | bcp14
@@ -8226,7 +8192,7 @@ to the v3 schema.</t>
       [ a:defaultValue = "default" ]
 -     attribute format { "counter" | "title" | "none" | "default" 
 +     attribute format { "default" | "title" | "counter" | "none" 
-  }?,
++ }?,
 +     attribute derivedContent { text }?,
 +     text
 +   }
@@ -8237,10 +8203,9 @@ to the v3 schema.</t>
 +     attribute target { xsd:IDREF },
 +     [ a:defaultValue = "of" ]
 +     attribute displayFormat { "of" | "comma" | "parens" | "bare" 
-+ }?,
-+     (attribute section { text },
-+      attribute relative { text }?)?,
-+     attribute derivedRemoteContent { text }?,
+  }?,
++     attribute section { text },
++     attribute relative { text }?,
 +     attribute derivedLink { text }?,
       text
     }
@@ -8259,7 +8224,7 @@ to the v3 schema.</t>
       [ a:defaultValue = "" ] attribute subitem { text }?,
       [ a:defaultValue = "false" ]
       attribute primary { "true" | "false" }?,
-+     [ a:defaultValue = "" ] attribute irefid { text }?,
++     attribute pn { text }?,
       empty
     }
   cref =
@@ -8483,7 +8448,6 @@ to the v3 schema.</t>
 +     attribute xml:base { text }?,
 +     attribute xml:lang { text }?,
 +     attribute anchor { xsd:ID }?,
-+     [ a:defaultValue = "0" ] attribute border { text }?,
 +     (td | th)+
 +   }
 + td =
@@ -8491,7 +8455,6 @@ to the v3 schema.</t>
 +     attribute xml:base { text }?,
 +     attribute xml:lang { text }?,
 +     attribute anchor { xsd:ID }?,
-+     [ a:defaultValue = "0" ] attribute border { text }?,
 +     [ a:defaultValue = "0" ] attribute colspan { text }?,
 +     [ a:defaultValue = "0" ] attribute rowspan { text }?,
 +     [ a:defaultValue = "left" ]
@@ -8522,7 +8485,6 @@ to the v3 schema.</t>
 +     attribute xml:base { text }?,
 +     attribute xml:lang { text }?,
 +     attribute anchor { xsd:ID }?,
-+     [ a:defaultValue = "0" ] attribute border { text }?,
 +     [ a:defaultValue = "0" ] attribute colspan { text }?,
 +     [ a:defaultValue = "0" ] attribute rowspan { text }?,
 +     [ a:defaultValue = "left" ]

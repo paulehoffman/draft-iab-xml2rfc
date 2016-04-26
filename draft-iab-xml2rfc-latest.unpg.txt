@@ -3,9 +3,9 @@
 
 Network Working Group                                         P. Hoffman
 Internet-Draft                                                     ICANN
-Obsoletes: 7749 (if approved)                             March 16, 2016
+Obsoletes: 7749 (if approved)                             April 18, 2016
 Intended status: Informational
-Expires: September 17, 2016
+Expires: October 20, 2016
 
 
                    The "xml2rfc" version 3 Vocabulary
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 17, 2016.
+   This Internet-Draft will expire on October 20, 2016.
 
 Copyright Notice
 
@@ -323,10 +323,10 @@ Table of Contents
    o  Add the "removeInRFC" attribute to <note>.
 
    o  Add "pn" to <artwork>, <aside>, <blockquote>, <boilerplate>,<dt>,
-      <figure>, <li>, <references>, <section>, <sourcecode>, <t>, and
-      <table> to hold automatically generated numbers for items in a
-      section that don't have their own numbering (namely figures and
-      tables).
+      <figure>, <iref>, <li>, <references>, <section>, <sourcecode>,
+      <t>, and <table> to hold automatically generated numbers for items
+      in a section that don't have their own numbering (namely figures
+      and tables).
 
    o  Add "display" to <cref> to indicate to tools whether or not to
       display the comment.
@@ -2120,33 +2120,35 @@ Table of Contents
 
 2.44.  <relref>
 
-   A relative link to a reference from the "References" section.
-   Formatters that have links (such as HTML and PDF) are likely to
-   render <relref> elements as external hyperlinks to the specified part
-   of the reference, creating the link target by combining the base URI
-   from the <reference> element with the "relative" attribute from this
-   element.  The "target" attribute is required, and it must be the
+   Represents a link to a specific part of a document that appears in a
+   <reference> element.  Formatters that have links (such as HTML and
+   PDF) render <relref> elements as external hyperlinks to the specified
+   part of the reference, creating the link target by combining the base
+   URI from the <reference> element with the "relative" attribute from
+   this element.  The "target" attribute is required, and it must be the
    anchor of a <reference> element.
 
-   Either the "relative" or the "section" attribute must be present, but
-   both cannot be given for a <relref> element.  If a reference is an
-   RFC or Internet-Draft that is in the v3 format and the desired
-   relative reference is to a section of that reference, the "section"
-   attribute is easier to use than the "relative" attribute because the
-   value of "section" is just a section string such as "2.3".
+   The "section" attribute is required, and the "relative" attribute is
+   option.  If reference is not an RFC or Internet-Draft that is in the
+   v3 format, the element MUST have a "relative" attribute; in this
+   case, the value of the "section" attribute is ignored.
 
    An example of the <relref> element with text content might be:
 
-         See <relref section="2.3" target="RFC7878">
+         See
+         <relref section="2.3" target="RFC7878" displayFormat="bare">
          the protocol overview</relref>
          for more information.
 
    An HTML formatter might generate:
 
          See
-         <a href="http://www.rfc-editor.org/info/rfc7878#s-2.3">
+         <a href="http://www.rfc-editor.org/rfc/rfc7878.html#s-2.3">
          the protocol overview</a>
          for more information.
+
+   Note that the URL in the above example might be different when the
+   RFC Editor deploys the v3 format.
 
    This element appears as a child element of <annotation>
    (Section 2.3), <blockquote> (Section 2.10), <cref> (Section 2.16),
@@ -2168,13 +2170,12 @@ Table of Contents
 
    "of"
 
-      A formatter should display the relative reference as the contents
-      of the "derivedRemoteContent" attribute followed by a space, the
-      word "of", another space, and the value from the "target"
-      attribute enclosed in square brackets.
+      A formatter should display the relative reference as the word
+      "Section" followed by a space, the contents of the "section"
+      attribute followed by a space, the word "of", another space, and
+      the value from the "target" attribute enclosed in square brackets.
 
-      For example, if Section 2.3 of RFC 7878 has the title "Protocol
-      Overview", with an input of:
+      For example, with an input of:
 
          See
          <relref section="2.3" target="RFC7878" displayFormat="of"/>
@@ -2196,10 +2197,10 @@ Table of Contents
 
       A formatter should display the relative reference as the value
       from the "target" attribute enclosed in square brackets, a comma,
-      a space, and the "derivedRemoteContent" attribute.
+      a space, the word "Section" followed by a space, and the "section"
+      attribute.
 
-      For example, if Section 2.3 of RFC 7878 has the title "Protocol
-      Overview", with an input of:
+      For example, with an input of:
 
          See
          <relref section="2.3" target="RFC7878" displayFormat="comma"/>,
@@ -2216,11 +2217,10 @@ Table of Contents
 
       A formatter should display the relative reference as the value
       from the "target" attribute enclosed in square brackets, a space,
-      a left parenthesis, the "derivedRemoteContent" attribute, and a
-      right parenthesis.
+      a left parenthesis, the word "Section" followed by a space, the
+      "section" attribute, and a right parenthesis.
 
-      For example, if Section 2.3 of RFC 7878 has the title "Protocol
-      Overview", with an input of:
+      For example, with an input of:
 
          See
          <relref section="2.3" target="RFC7878" displayFormat="parens"/>
@@ -2237,13 +2237,12 @@ Table of Contents
    "bare"
 
       A formatter should display the relative reference as the contents
-      of the "derivedRemoteContent" attribute and nothing else.  This is
-      useful when there are multiple relative references to a single
-      base reference.
+      of the "section" attribute and nothing else.  This is useful when
+      there are multiple relative references to a single base reference.
 
       For example:
 
-         See
+         See Section
          <relref section="2.3" target="RFC7878" displayFormat="bare"/>
          and
          <relref section="2.4" target="RFC7878" displayFormat="of"/>
@@ -2251,9 +2250,9 @@ Table of Contents
 
       An HTML formatter might generate:
 
-         See
+         See Section
          <a href="http://www.rfc-editor.org/info/rfc7878#s-2.3">
-         Section 2.3</a>
+         2.3</a>
          and
          <a href="http://www.rfc-editor.org/info/rfc7878#s-2.4">
          Section 2.4</a> of
@@ -2277,10 +2276,10 @@ Table of Contents
    create the relative reference; typically, this is "#" for HTML
    documents.
 
-2.44.3.  "section" Attribute
+2.44.3.  "section" Attribute (Mandatory)
 
    Specifies a section of the target reference.  If the reference is not
-   an RFC or Internet-Draft, it is an error.
+   an RFC or Internet-Draft in the v3 format, it is an error.
 
 2.44.4.  "target" Attribute (Mandatory)
 
@@ -3074,18 +3073,13 @@ Table of Contents
 
    Document-wide unique identifier for the cell.
 
-2.56.3.  "border" Attribute
-
-   The width of the border for this cell.  The default is 0, meaning no
-   border.
-
-2.56.4.  "colspan" Attribute
+2.56.3.  "colspan" Attribute
 
    The number of columns that the cell is to span.  For example, setting
    "colspan='3'" indicates that the cell occupies the same horizontal
    space as three cells in the row above or below this one.
 
-2.56.5.  "rowspan" Attribute
+2.56.4.  "rowspan" Attribute
 
    The number of rows that the cell is to span.  For example, setting
    "rowspan='3'" indicates that the cell occupies the same vertical
@@ -3182,18 +3176,13 @@ Table of Contents
 
    Document-wide unique identifier for the row.
 
-2.58.3.  "border" Attribute
-
-   The width of the border for this cell.  The default is 0, meaning no
-   border.
-
-2.58.4.  "colspan" Attribute
+2.58.3.  "colspan" Attribute
 
    The number of columns that the cell is to span.  For example, setting
    "colspan='3'" indicates that the cell occupies the same horizontal
    space as three cells in the row above or below this one.
 
-2.58.5.  "rowspan" Attribute
+2.58.4.  "rowspan" Attribute
 
    The number of rows that the cell is to span.  For example, setting
    "rowspan='3'" indicates that the cell occupies the same vertical
@@ -3252,12 +3241,6 @@ Table of Contents
 2.61.1.  "anchor" Attribute
 
    Document-wide unique identifier for the row.
-
-2.61.2.  "border" Attribute
-
-   The width of the border for this row.  The default is 0, meaning no
-   border.  If the cells in this row also have "border" attributes,
-   those values override this value for those cells.
 
 2.62.  <tt>
 
@@ -4477,6 +4460,13 @@ B.2.1.  Overlapping Values
       "nnn" is the figure number.  For example, this would be "f-5" for
       Figure 5.
 
+   o  "pn" for <iref> elements always has the format "i-ttt-nnn", where
+      "ttt" is the slugified item (plus a hyphen and the slugified
+      subitem if there is a subitem), and "nnn" is the instance of that
+      item/subitem pair.  For example, this would be "i-foo-1" for
+      "<iref item='foo'>" and "i-foo-bar-1" for "<iref item='foo'
+      subitem='bar'>".
+
    o  "pn" for <table> elements always has the format "t-nnn", where
       "nnn" is the table number.  For example, this would be "t-5" for
       Table 5.
@@ -4523,9 +4513,6 @@ B.3.  Attributes Controlled by the Prep Tool
       value of the "src" attribute if that attribute is removed by the
       prep tool.
 
-   o  <iref> "irefid" attribute -- This attribute is filled with an
-      identifier used when creating indexes.
-
    o  <name> "slugifiedName" attribute -- This attribute is filled with
       a "slugified" version of the text in the element.  This attribute
       can be used in the output formats for elements that have both
@@ -4536,22 +4523,6 @@ B.3.  Attributes Controlled by the Prep Tool
       and the relative part that is either a copy of the "relative"
       attribute or a section number derived from the "section"
       attribute.
-
-   o  <relref> "derivedRemoteContent" attribute -- If the <relref>
-      element has text content, this attribute is filled with that
-      content; the "displayFormat" attribute is set to "bare" if that
-      attribute is not already set.  If the <relref> element has no text
-      content, this attribute is filled with the text for the remote
-      link, such as "Section 2.3" or "Table 5".  The prep tool might
-      determine this text by reading the target reference and, if it is
-      an RFC or Internet-Draft in the v3 format, finding the anchor
-      given in the "relative" attribute or derived from the "section"
-      attribute, and using the title of that element.  If the reference
-      is not an RFC or Internet-Draft in the v3 format, the text
-      fragment is simply the value of the "relative" or "section"
-      attribute.  This will rarely produce a good result in formatted
-      output so, for these documents, the <relref> element should
-      contain text content.
 
    o  <rfc> "expiresDate" attribute -- This attribute is filled with the
       date that an Internet Draft expires.  The date is in the format
@@ -4950,6 +4921,7 @@ Appendix C.  Relax NG Schema
        [ a:defaultValue = "empty" ] attribute style { text }?,
        attribute hangIndent { text }?,
        attribute counter { text }?,
+       attribute pn { text }?,
        t+
      }
 
@@ -4963,6 +4935,7 @@ Appendix C.  Relax NG Schema
        attribute group { text }?,
        [ a:defaultValue = "normal" ]
        attribute spacing { "normal" | "compact" }?,
+       attribute pn { text }?,
        li+
      }
 
@@ -4973,8 +4946,9 @@ Appendix C.  Relax NG Schema
        attribute anchor { xsd:ID }?,
        [ a:defaultValue = "normal" ]
        attribute spacing { "normal" | "compact" }?,
-       [ a:defaultValue = "false" ]
-       attribute empty { "false" | "true" }?,
+       ([ a:defaultValue = "false" ]
+        attribute empty { "false" | "true" },
+        attribute pn { text }?)?,
        li+
      }
 
@@ -5008,6 +4982,7 @@ Appendix C.  Relax NG Schema
        attribute spacing { "normal" | "compact" }?,
        [ a:defaultValue = "true" ]
        attribute hanging { "false" | "true" }?,
+       attribute pn { text }?,
        (dt, dd)+
      }
 
@@ -5036,6 +5011,7 @@ Appendix C.  Relax NG Schema
        attribute xml:base { text }?,
        attribute xml:lang { text }?,
        attribute anchor { xsd:ID }?,
+       attribute pn { text }?,
        ((artwork | dl | figure | ol | sourcecode | t | ul)+
         | (text
            | bcp14
@@ -5071,9 +5047,8 @@ Appendix C.  Relax NG Schema
        attribute target { xsd:IDREF },
        [ a:defaultValue = "of" ]
        attribute displayFormat { "of" | "comma" | "parens" | "bare" }?,
-       (attribute section { text },
-        attribute relative { text }?)?,
-       attribute derivedRemoteContent { text }?,
+       attribute section { text },
+       attribute relative { text }?,
        attribute derivedLink { text }?,
        text
      }
@@ -5094,7 +5069,7 @@ Appendix C.  Relax NG Schema
        [ a:defaultValue = "" ] attribute subitem { text }?,
        [ a:defaultValue = "false" ]
        attribute primary { "true" | "false" }?,
-       [ a:defaultValue = "" ] attribute irefid { text }?,
+       attribute pn { text }?,
        empty
      }
 
@@ -5328,7 +5303,6 @@ Appendix C.  Relax NG Schema
        attribute xml:base { text }?,
        attribute xml:lang { text }?,
        attribute anchor { xsd:ID }?,
-       [ a:defaultValue = "0" ] attribute border { text }?,
        (td | th)+
      }
 
@@ -5337,7 +5311,6 @@ Appendix C.  Relax NG Schema
        attribute xml:base { text }?,
        attribute xml:lang { text }?,
        attribute anchor { xsd:ID }?,
-       [ a:defaultValue = "0" ] attribute border { text }?,
        [ a:defaultValue = "0" ] attribute colspan { text }?,
        [ a:defaultValue = "0" ] attribute rowspan { text }?,
        [ a:defaultValue = "left" ]
@@ -5369,7 +5342,6 @@ Appendix C.  Relax NG Schema
        attribute xml:base { text }?,
        attribute xml:lang { text }?,
        attribute anchor { xsd:ID }?,
-       [ a:defaultValue = "0" ] attribute border { text }?,
        [ a:defaultValue = "0" ] attribute colspan { text }?,
        [ a:defaultValue = "0" ] attribute rowspan { text }?,
        [ a:defaultValue = "left" ]
@@ -5945,6 +5917,7 @@ Appendix D.  Schema Differences from v2
    +     [ a:defaultValue = "empty" ] attribute style { text }?,
          attribute hangIndent { text }?,
          attribute counter { text }?,
+   +     attribute pn { text }?,
          t+
        }
    + ol =
@@ -5957,6 +5930,7 @@ Appendix D.  Schema Differences from v2
    +     attribute group { text }?,
    +     [ a:defaultValue = "normal" ]
    +     attribute spacing { "normal" | "compact" }?,
+   +     attribute pn { text }?,
    +     li+
    +   }
    + ul =
@@ -5966,8 +5940,9 @@ Appendix D.  Schema Differences from v2
    +     attribute anchor { xsd:ID }?,
    +     [ a:defaultValue = "normal" ]
    +     attribute spacing { "normal" | "compact" }?,
-   +     [ a:defaultValue = "false" ]
-   +     attribute empty { "false" | "true" }?,
+   +     ([ a:defaultValue = "false" ]
+   +      attribute empty { "false" | "true" },
+   +      attribute pn { text }?)?,
    +     li+
    +   }
    + li =
@@ -5999,6 +5974,7 @@ Appendix D.  Schema Differences from v2
    +     attribute spacing { "normal" | "compact" }?,
    +     [ a:defaultValue = "true" ]
    +     attribute hanging { "false" | "true" }?,
+   +     attribute pn { text }?,
    +     (dt, dd)+
    +   }
    + dt =
@@ -6025,6 +6001,7 @@ Appendix D.  Schema Differences from v2
    +     attribute xml:base { text }?,
    +     attribute xml:lang { text }?,
    +     attribute anchor { xsd:ID }?,
+   +     attribute pn { text }?,
    +     ((artwork | dl | figure | ol | sourcecode | t | ul)+
    +      | (text
    +         | bcp14
@@ -6051,7 +6028,7 @@ Appendix D.  Schema Differences from v2
          [ a:defaultValue = "default" ]
    -     attribute format { "counter" | "title" | "none" | "default"
    +     attribute format { "default" | "title" | "counter" | "none"
-     }?,
+   + }?,
    +     attribute derivedContent { text }?,
    +     text
    +   }
@@ -6062,10 +6039,9 @@ Appendix D.  Schema Differences from v2
    +     attribute target { xsd:IDREF },
    +     [ a:defaultValue = "of" ]
    +     attribute displayFormat { "of" | "comma" | "parens" | "bare"
-   + }?,
-   +     (attribute section { text },
-   +      attribute relative { text }?)?,
-   +     attribute derivedRemoteContent { text }?,
+     }?,
+   +     attribute section { text },
+   +     attribute relative { text }?,
    +     attribute derivedLink { text }?,
          text
        }
@@ -6084,7 +6060,7 @@ Appendix D.  Schema Differences from v2
          [ a:defaultValue = "" ] attribute subitem { text }?,
          [ a:defaultValue = "false" ]
          attribute primary { "true" | "false" }?,
-   +     [ a:defaultValue = "" ] attribute irefid { text }?,
+   +     attribute pn { text }?,
          empty
        }
      cref =
@@ -6308,7 +6284,6 @@ Appendix D.  Schema Differences from v2
    +     attribute xml:base { text }?,
    +     attribute xml:lang { text }?,
    +     attribute anchor { xsd:ID }?,
-   +     [ a:defaultValue = "0" ] attribute border { text }?,
    +     (td | th)+
    +   }
    + td =
@@ -6316,7 +6291,6 @@ Appendix D.  Schema Differences from v2
    +     attribute xml:base { text }?,
    +     attribute xml:lang { text }?,
    +     attribute anchor { xsd:ID }?,
-   +     [ a:defaultValue = "0" ] attribute border { text }?,
    +     [ a:defaultValue = "0" ] attribute colspan { text }?,
    +     [ a:defaultValue = "0" ] attribute rowspan { text }?,
    +     [ a:defaultValue = "left" ]
@@ -6347,7 +6321,6 @@ Appendix D.  Schema Differences from v2
    +     attribute xml:base { text }?,
    +     attribute xml:lang { text }?,
    +     attribute anchor { xsd:ID }?,
-   +     [ a:defaultValue = "0" ] attribute border { text }?,
    +     [ a:defaultValue = "0" ] attribute colspan { text }?,
    +     [ a:defaultValue = "0" ] attribute rowspan { text }?,
    +     [ a:defaultValue = "left" ]
@@ -6642,7 +6615,6 @@ Index
          asciiSurname  1
          asciiValue  1
          blankLines  1
-         border  1
          category  1
          cite  1
          colspan  1
@@ -6752,10 +6724,6 @@ Index
          quotedFrom attribute  1
       boilerplate element  1
          inside front  1
-      border attribute
-         in td element  1
-         in th element  1
-         in tr element  1
       br element  1
          inside td  1
          inside th  1
@@ -7406,7 +7374,6 @@ Index
       td element  1
          align attribute  1
          anchor attribute  1
-         border attribute  1
          colspan attribute  1
          inside tr  1
          rowspan attribute  1
@@ -7423,7 +7390,6 @@ Index
       th element  1
          align attribute  1
          anchor attribute  1
-         border attribute  1
          colspan attribute  1
          inside tr  1
          rowspan attribute  1
@@ -7450,7 +7416,6 @@ Index
          in rfc element  1
       tr element  1
          anchor attribute  1
-         border attribute  1
          inside tbody  1
          inside tfoot  1
          inside thead  1
