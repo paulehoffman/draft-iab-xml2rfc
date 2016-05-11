@@ -13,6 +13,8 @@
 
 <!--
 
+#### Need an unpreptool ###
+
 rfc/@submissionType is now duplicated in seriesInfo/stream. This needs to be rectified.
 	rfc/@submissionType is in v2
 
@@ -1245,8 +1247,8 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
    <t>
       Indicates that a line break should be inserted in the generated output by a formatting tool.
       It is always expressed as &lt;br /&gt;.
-      Multiple successive instances of this element do not cause blank lines to appear in the output,
-      and is thus not useful.
+      Multiple successive instances of this element are ignored. Successive instances with an
+      intervening white space (such as "&lt;br /&gt; &lt;br /&gt;") will create a single blank line.
    </t>
    <t><!--AG-->This element appears as a child element of &lt;<x:ref>td</x:ref>&gt; (<xref target="element.td"/>) and &lt;<x:ref>th</x:ref>&gt; (<xref target="element.th"/>).</t>
    <t anchor="element.br.contents"><!--AG-->
@@ -3777,9 +3779,9 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       <iref item="section element" subitem="removeInRFC attribute"/>
       <iref item="removeInRFC attribute" subitem="in section element"/>
       <t>
-         If set to "true", the formatter is requested to mark this section with a paragraph at the beginning of the section
-         indicating that it should be
+         If set to "true", this note is marked in the prep tool with text indicating that it should be
          removed before the document is published as an RFC.
+         That text will be “This note is to be removed before publishing as an RFC.”.
       </t>
       <t><!--AG-->Allowed values:</t>
       <ul><!--AG-->
@@ -4621,8 +4623,8 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       <iref item="colspan attribute" subitem="in td element"/>
       <t>
          The number of columns that the cell is to span. For example, setting "colspan='3'"
-         indicates that the cell occupies the same horizontal space as three cells in the
-         row above or below this one.
+         indicates that the cell occupies the same horizontal space as three cells of
+         a row without any "colspan" attributes.
       </t>
    </section>
 
@@ -4798,8 +4800,8 @@ See <xref target="cdata.and.escaping"/> for a description of to deal with issues
       <iref item="colspan attribute" subitem="in th element"/>
       <t>
          The number of columns that the cell is to span. For example, setting "colspan='3'"
-         indicates that the cell occupies the same horizontal space as three cells in the
-         row above or below this one.
+         indicates that the cell occupies the same horizontal space as three cells of
+         a row without any "colspan" attributes.
       </t>
    </section>
 
@@ -6571,11 +6573,7 @@ didn't write, such as "see Section 3.2 of RFC 6949".
 The XML vocabulary in this document attempts to support both sets of people.</t>
 
 <t>Authors can leave anchors in a document that can later be used for references with the "anchor"
-attribute. Anchors can be included in the following elements: &lt;<x:ref>artwork</x:ref>&gt;,
-&lt;<x:ref>aside</x:ref>&gt;, &lt;<x:ref>blockquote</x:ref>&gt;,  &lt;<x:ref>cref</x:ref>&gt;,
-&lt;<x:ref>figure</x:ref>&gt;, &lt;<x:ref>li</x:ref>&gt;, &lt;<x:ref>reference</x:ref>&gt;,
-&lt;<x:ref>referencegroup</x:ref>&gt;, &lt;<x:ref>section</x:ref>&gt;,
-&lt;<x:ref>sourcecode</x:ref>&gt;, &lt;<x:ref>t</x:ref>&gt;, and &lt;<x:ref>table</x:ref>&gt;. The
+attribute. Anchors can be included in the numerous elements. The
 author can then refer to that anchor in the "target" attribute of the &lt;<x:ref>xref</x:ref>&gt;
 element.</t>
 
